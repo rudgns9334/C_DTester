@@ -132,4 +132,24 @@ public class Serial {
 	int GetCycle() {
 		return gui.GetCycle();
 	}
+	
+	void SetV(String V) {
+		gui.setV(V);
+	}
+	
+	void SetI(String I) {
+		gui.setI(I);
+	}
+	
+	void SetDCIR(String DCIR) {
+		gui.setDCIR(DCIR);
+	}
+	
+	void SetQ(String Q) {
+		gui.setQ(Q);
+	}
+	
+	void SetSOC(String SOC) {
+		gui.setSOC(SOC);
+	}
 }

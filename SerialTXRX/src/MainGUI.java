@@ -39,6 +39,11 @@ public class MainGUI extends JFrame implements ActionListener{
 	JLabel FP;
 	JLabel Cycle;
 	JLabel transportSpeed;
+	JLabel CV;
+	JLabel CI;
+	JLabel CDCIR;
+	JLabel CQ;
+	JLabel CSOC;
 	
 	JTextField InputC;
 	JTextField InputRT;
@@ -93,6 +98,11 @@ public class MainGUI extends JFrame implements ActionListener{
 		FP = new JLabel("파일경로");
 		Cycle = new JLabel("회/초");
 		transportSpeed = new JLabel("통신속도");
+		CV = new JLabel("V : ");
+		CI = new JLabel("I : ");
+		CDCIR = new JLabel("DC_IR : ");
+		CQ = new JLabel("Q : ");
+		CSOC = new JLabel("SOC : ");
 		
 		comboBox = new JComboBox(func);
 		
@@ -269,6 +279,19 @@ public class MainGUI extends JFrame implements ActionListener{
 		SpecBox.setBackground(Color.white);
 		SpecBox.setBounds(10, 20, 180, 160);
 		SpecBox.setBorder(border);
+		SpecBox.setLayout(null);
+		
+		CV.setBounds(10, 30, 100, 20);
+		CI.setBounds(10, 50, 100, 20);
+		CDCIR.setBounds(10, 70, 100, 20);
+		CQ.setBounds(10, 90, 100, 20);
+		CSOC.setBounds(10, 110, 100, 20);
+		
+		SpecBox.add(CV);
+		SpecBox.add(CI);
+		SpecBox.add(CDCIR);
+		SpecBox.add(CQ);
+		SpecBox.add(CSOC);
 		
 		BatterySpec.add(SpecBoxName);
 		BatterySpec.add(SpecBox);
@@ -358,6 +381,26 @@ public class MainGUI extends JFrame implements ActionListener{
 		Statemode.setText(str);
 	}
 	
+	public void setV(String V) {
+		CV.setText("V : " + V);
+	}
+	
+	public void setI(String I) {
+		CI.setText("I : " + I);
+	}
+	
+	public void setDCIR(String DCIR) {
+		CDCIR.setText("DCIR : " + DCIR);
+	}
+	
+	public void setQ(String Q) {
+		CQ.setText("Q : " + Q);
+	}
+	
+	public void setSOC(String SOC) {
+		CSOC.setText("SOC : " + SOC);
+	}
+	
 	public void endSetting() {
 		Start.setText("Start");
 		StateRun.setText("Ready");
@@ -391,11 +434,11 @@ public class MainGUI extends JFrame implements ActionListener{
 				System.out.println("Start");
 				Start.setText("Stop");
 				StateRun.setText("Running");
-				Statemode.setText("charging");
 				run = 1;
 				if(comboBox.getSelectedItem().equals("충전")) {
 					try {
 						serial.sendString("충전");
+						Statemode.setText("charging");
 						serial.OnlyCharging();
 						serial.addData(1, 0);
 					} catch (Exception e1) {
@@ -406,6 +449,7 @@ public class MainGUI extends JFrame implements ActionListener{
 				else if(comboBox.getSelectedItem().equals("방전")) {
 					try {
 						serial.sendString("방전");
+						Statemode.setText("discharging");
 						serial.OnlyDisCharging();
 						serial.addData(3, 0);
 					} catch (Exception e1) {
@@ -416,6 +460,7 @@ public class MainGUI extends JFrame implements ActionListener{
 				else if(comboBox.getSelectedItem().equals("일괄실험")) {
 					try {
 						serial.sendString("충전");
+						Statemode.setText("charging");
 						serial.addData(1, 0);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
@@ -449,6 +494,10 @@ public class MainGUI extends JFrame implements ActionListener{
 				float Vmin = Float.parseFloat(InputVMin.getText());
 				float Imax = Float.parseFloat(InputIMax.getText());
 				float Imin = Float.parseFloat(InputIMin.getText());
+				
+				if(Imin == 0) {
+					new ErrorGUI(1);
+				}
 				
 				Vmax = Vmax * 200;
 				Vmin = Vmin * 200;

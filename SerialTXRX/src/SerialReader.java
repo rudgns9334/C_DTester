@@ -58,7 +58,7 @@ public class SerialReader implements Runnable{
 				//System.out.print(new String(buffer,0,len,"UTF-8"));
 				
 				if(len > 7) {
-					new ErrorGUI();
+					new ErrorGUI(0);
 				}
 				
 				if(type==1 && len>1) {
@@ -71,10 +71,10 @@ public class SerialReader implements Runnable{
 				if(len == 1) {
 					int signal = data[0];
 					if(signal>=8 || signal<0) {
-						System.out.println("haha");
+//						System.out.println("haha");
 					}
 					else if(signal == 0) {
-						System.out.println("STTTTOP");
+//						System.out.println("STTTTOP");
 					}
 					else {
 						switch(signal) {
